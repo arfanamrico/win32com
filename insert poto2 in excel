@@ -10,6 +10,8 @@ ws =wb.Worksheets("Panoramic Pole  & Data Audit ")
 sh_ge =wb.Worksheets("GE")
 sh_auditdata =wb.Worksheets("Audit Data ")
 sh_dataaudit =wb.Worksheets("Data Audit")
+sh_speedtest =wb.Worksheets("Speedtest & Volte Sms")
+
 #nama-nama foto
 panoramic = ["0.jpg","30.jpg","60.jpg","90.jpg","120.jpg","150.jpg","180.jpg","210.jpg","240.jpg","270.jpg","300.jpg","330.jpg"]
 sec1 = ["azz_1.jpg","mt_1.jpg","label_1.jpg","rru_1.jpg"]
@@ -19,6 +21,9 @@ auditdata = ["compas.jpg","antennaheight.jpg","tower.jpg","sitename.jpg"]
 dataaudit_1 = ["backview_1.jpg","sideview_1.jpg","bottomview_1.jpg","electrical_1.jpg"]
 dataaudit_2 = ["backview_2.jpg","sideview_2.jpg","bottomview_2.jpg","electrical_2.jpg"]
 dataaudit_3 = ["backview_3.jpg","sideview_3.jpg","bottomview_3.jpg","electrical_3.jpg"]
+speedtest_1 = ["lock1_1.jpg","lock1_2.jpg","unlock1_1.jpg","unlock1_2.jpg","voltemoc1.jpg","sms1.jpg"]
+speedtest_2 = ["lock2_1.jpg","lock2_2.jpg","unlock2_1.jpg","unlock2_2.jpg","voltemoc2.jpg","sms2.jpg"]
+speedtest_3 = ["lock3_1.jpg","lock3_2.jpg","unlock3_1.jpg","unlock3_2.jpg","voltemoc3.jpg","sms3.jpg"]
 
 #GE size
 gwidth=686.16
@@ -35,6 +40,9 @@ sheight=131.04
 #data audit size
 dwidth=278.64
 dheight=128.16
+#speedtest size
+speedwidth=121.68
+speedheight=260.64
 
 #memasukkan gambar GE
 try:
@@ -229,7 +237,7 @@ for i in dataaudit_2:
         pass
 for i in dataaudit_3:
     try:
-        #sector2 backview, sideview, bottomview, electrical
+        #sector3 backview, sideview, bottomview, electrical
         if i in os.listdir(pic_path) and i == dataaudit_3[0]:
             left=sh_dataaudit.Cells(1,13).Left #(1,required_coloumn)
             top=sh_dataaudit.Cells(8,1).Top #(required_row,1)
@@ -246,6 +254,93 @@ for i in dataaudit_3:
             left=sh_dataaudit.Cells(1,13).Left #(1,required_coloumn)
             top=sh_dataaudit.Cells(38,1).Top #(required_row,1)
             sh_dataaudit.Shapes.AddPicture(f'{pic_path}/{dataaudit_3[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=dwidth, Height=dheight)
+    except:
+        pass
+for i in speedtest_1:
+    try:
+        #sector1 lock, unlock, volte, sms
+        if i in os.listdir(pic_path) and i == speedtest_1[0]:
+            left=sh_speedtest.Cells(1,2).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(12,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_1[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_1[1]:
+            left=sh_speedtest.Cells(1,3).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(12,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_1[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_1[2]:
+            left=sh_speedtest.Cells(1,2).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(33,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_1[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_1[3]:
+            left=sh_speedtest.Cells(1,3).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(33,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_1[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_1[4]:
+            left=sh_speedtest.Cells(1,2).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(60,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_1[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_1[5]:
+            left=sh_speedtest.Cells(1,3).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(60,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_1[5]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+    except:
+        pass
+for i in speedtest_2:
+    try:
+        #sector2 lock, unlock, volte, sms
+        if i in os.listdir(pic_path) and i == speedtest_2[0]:
+            left=sh_speedtest.Cells(1,5).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(12,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_2[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_2[1]:
+            left=sh_speedtest.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(12,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_2[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_2[2]:
+            left=sh_speedtest.Cells(1,5).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(33,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_2[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_2[3]:
+            left=sh_speedtest.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(33,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_2[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_2[4]:
+            left=sh_speedtest.Cells(1,5).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(60,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_2[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_2[5]:
+            left=sh_speedtest.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(60,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_2[5]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+    except:
+        pass
+for i in speedtest_3:
+    try:
+        #sector3 lock, unlock, volte, sms
+        if i in os.listdir(pic_path) and i == speedtest_3[0]:
+            left=sh_speedtest.Cells(1,9).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(12,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_3[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_3[1]:
+            left=sh_speedtest.Cells(1,11).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(12,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_3[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_3[2]:
+            left=sh_speedtest.Cells(1,9).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(33,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_3[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_3[3]:
+            left=sh_speedtest.Cells(1,11).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(33,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_3[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_3[4]:
+            left=sh_speedtest.Cells(1,9).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(60,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_3[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_3[5]:
+            left=sh_speedtest.Cells(1,11).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(60,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_3[5]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
     except:
         pass
 
