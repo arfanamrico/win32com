@@ -1,0 +1,70 @@
+import win32com.client    
+import os
+
+pic_path = r"E:\Logfiles\PWK746\PWK746-CIKOPO\PANORAMIC"
+#pic_path = r"E:\Logfiles\DPK242\DPK242_BKTCENGKEHTUGUPAB\other\20220728_105442.jpg"
+Excel = win32com.client.Dispatch("Excel.Application")
+wb = Excel.Workbooks.Open(r"E:\Report\testimage.xlsx")
+ws =wb.Worksheets("Sheet1")
+panoramic = ["0.jpg","30.jpg","60.jpg","90.jpg","120.jpg","150.jpg","180.jpg","210.jpg","240.jpg","270.jpg","300.jpg","330.jpg"]
+#panoramic size
+pwidth=231.84
+pheight=159.84
+for i in panoramic:
+    try:
+        #panoramic 0, 30, 60, 90
+        if i in os.listdir(pic_path) and i == panoramic[0]:
+            left=ws.Cells(1,1).Left #(1,required_coloumn)
+            top=ws.Cells(1,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[1]:
+            left=ws.Cells(1,6).Left #(1,required_coloumn)
+            top=ws.Cells(1,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[2]:
+            left=ws.Cells(1,11).Left #(1,required_coloumn)
+            top=ws.Cells(1,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[3]:
+            left=ws.Cells(1,16).Left #(1,required_coloumn)
+            top=ws.Cells(1,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        #panoramic 120, 150, 180, 210
+        if i in os.listdir(pic_path) and i == panoramic[4]:
+            left=ws.Cells(1,1).Left #(1,required_coloumn)
+            top=ws.Cells(13,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[5]:
+            left=ws.Cells(1,6).Left #(1,required_coloumn)
+            top=ws.Cells(13,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[5]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[6]:
+            left=ws.Cells(1,11).Left #(1,required_coloumn)
+            top=ws.Cells(13,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[6]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[7]:
+            left=ws.Cells(1,16).Left #(1,required_coloumn)
+            top=ws.Cells(13,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[7]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        #panoramic 240, 270, 300, 330
+        if i in os.listdir(pic_path) and i == panoramic[8]:
+            left=ws.Cells(1,1).Left #(1,required_coloumn)
+            top=ws.Cells(25,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[8]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[9]:
+            left=ws.Cells(1,6).Left #(1,required_coloumn)
+            top=ws.Cells(25,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[9]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[10]:
+            left=ws.Cells(1,11).Left #(1,required_coloumn)
+            top=ws.Cells(25,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[10]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[11]:
+            left=ws.Cells(1,16).Left #(1,required_coloumn)
+            top=ws.Cells(25,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[11]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+    except:
+        pass
+wb.save
+wb.Close()
+#Excel.Quit()
