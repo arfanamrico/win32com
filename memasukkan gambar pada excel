@@ -1,0 +1,61 @@
+import win32com.client    
+
+pic_path = r"E:\Logfiles\DPK242\DPK242_BKTCENGKEHTUGUPAB\other\20220728_105442.jpg"
+Excel = win32com.client.Dispatch("Excel.Application")
+wb = Excel.Workbooks.Open(r"E:\Report\testimage.xlsx")
+ws =wb.Worksheets("Sheet1")
+#panoramic size
+pwidth=231.84
+pheight=159.84
+#panoramic 0, 30, 60, 90
+left=ws.Cells(1,1).Left #(1,required_coloumn)
+top=ws.Cells(1,1).Top #(required_row,1)
+ws.Shapes.AddPicture(pic_path,LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+
+left=ws.Cells(1,6).Left #(1,required_coloumn)
+top=ws.Cells(1,1).Top #(required_row,1)
+ws.Shapes.AddPicture(pic_path,LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+
+left=ws.Cells(1,11).Left #(1,required_coloumn)
+top=ws.Cells(1,1).Top #(required_row,1)
+ws.Shapes.AddPicture(pic_path,LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+
+left=ws.Cells(1,16).Left #(1,required_coloumn)
+top=ws.Cells(1,1).Top #(required_row,1)
+ws.Shapes.AddPicture(pic_path,LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+#panoramic 120, 150, 180, 210
+left=ws.Cells(1,1).Left #(1,required_coloumn)
+top=ws.Cells(13,1).Top #(required_row,1)
+ws.Shapes.AddPicture(pic_path,LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+
+left=ws.Cells(1,6).Left #(1,required_coloumn)
+top=ws.Cells(13,1).Top #(required_row,1)
+ws.Shapes.AddPicture(pic_path,LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+
+left=ws.Cells(1,11).Left #(1,required_coloumn)
+top=ws.Cells(13,1).Top #(required_row,1)
+ws.Shapes.AddPicture(pic_path,LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+
+left=ws.Cells(1,16).Left #(1,required_coloumn)
+top=ws.Cells(13,1).Top #(required_row,1)
+ws.Shapes.AddPicture(pic_path,LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+#panoramic 240, 270, 300, 330
+left=ws.Cells(1,1).Left #(1,required_coloumn)
+top=ws.Cells(25,1).Top #(required_row,1)
+ws.Shapes.AddPicture(pic_path,LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+
+left=ws.Cells(1,6).Left #(1,required_coloumn)
+top=ws.Cells(25,1).Top #(required_row,1)
+ws.Shapes.AddPicture(pic_path,LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+
+left=ws.Cells(1,11).Left #(1,required_coloumn)
+top=ws.Cells(25,1).Top #(required_row,1)
+ws.Shapes.AddPicture(pic_path,LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+
+left=ws.Cells(1,16).Left #(1,required_coloumn)
+top=ws.Cells(25,1).Top #(required_row,1)
+ws.Shapes.AddPicture(pic_path,LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+
+wb.save
+wb.Close()
+Excel.Quit()
