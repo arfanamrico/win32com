@@ -1,0 +1,21 @@
+import win32com.client    
+
+Excel = win32com.client.Dispatch("Excel.Application")
+wb = Excel.Workbooks.Open(r"E:\Report\QC_template.xlsx")
+#penamaan sheet
+sh_cover =wb.Worksheets("Cover")
+
+
+#mengisi sheet Cover
+sh_cover.cells(9,4).value = SiteID
+sh_cover.cells(10,4).value = Typeofwork
+sh_cover.cells(11,4).value = NEtype
+sh_cover.cells(12,4).value = Band
+sh_cover.cells(13,4).value = Batch
+sh_cover.cells(9,15).value = eNodeBName
+sh_cover.cells(10,15).value = eNodeBID
+sh_cover.cells(11,15).value = PONumber
+sh_cover.cells(12,15).value = SOWco
+
+wb.save
+wb.Close()
