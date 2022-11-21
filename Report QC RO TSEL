@@ -1,0 +1,648 @@
+import win32com.client    
+import pandas as pd
+import os
+
+pic_path = r"E:\Logfiles\JSA012_L2100_NC_DN_JABO\fotofoto"
+rawdata = r"E:\Logfiles\JSA012_L2100_NC_DN_JABO\data.xlsx"
+df = pd.read_excel(rawdata)
+Excel = win32com.client.Dispatch("Excel.Application")
+wb = Excel.Workbooks.Open(r"E:\Report\QC_template.xlsx")
+#penamaan sheet
+sh_cover =wb.Worksheets("Cover")
+sh_ge =wb.Worksheets("GE")
+sh_auditdata =wb.Worksheets("Audit Data ")
+ws =wb.Worksheets("Panoramic Pole  & Data Audit ")
+sh_dataaudit =wb.Worksheets("Data Audit")
+sh_kpi =wb.Worksheets("KPI")
+sh_speedtest =wb.Worksheets("Speedtest & Volte Sms")
+sh_moc =wb.Worksheets("MOC")
+sh_mtc =wb.Worksheets("MTC")
+sh_ping =wb.Worksheets("Ping & USSD")
+#nama-nama foto
+panoramic = ["0.jpg","30.jpg","60.jpg","90.jpg","120.jpg","150.jpg","180.jpg","210.jpg","240.jpg","270.jpg","300.jpg","330.jpg"]
+sec1 = ["azz_1.jpg","mt_1.jpg","label_1.jpg","rru_1.jpg"]
+sec2 = ["azz_2.jpg","mt_2.jpg","label_2.jpg","rru_2.jpg"]
+sec3 = ["azz_3.jpg","mt_3.jpg","label_3.jpg","rru_3.jpg"]
+auditdata = ["compas.jpg","antennaheight.jpg","tower.jpg","sitename.jpg"]
+dataaudit_1 = ["backview_1.jpg","sideview_1.jpg","bottomview_1.jpg","electrical_1.jpg"]
+dataaudit_2 = ["backview_2.jpg","sideview_2.jpg","bottomview_2.jpg","electrical_2.jpg"]
+dataaudit_3 = ["backview_3.jpg","sideview_3.jpg","bottomview_3.jpg","electrical_3.jpg"]
+speedtest_1 = ["lock1_1.jpg","lock1_2.jpg","unlock1_1.jpg","unlock1_2.jpg","voltemoc1.jpg","sms1.jpg"]
+speedtest_2 = ["lock2_1.jpg","lock2_2.jpg","unlock2_1.jpg","unlock2_2.jpg","voltemoc2.jpg","sms2.jpg"]
+speedtest_3 = ["lock3_1.jpg","lock3_2.jpg","unlock3_1.jpg","unlock3_2.jpg","voltemoc3.jpg","sms3.jpg"]
+moc_1 = ["moc1_1.jpg","moc1_2.jpg","moc1_3.jpg","moc1_4.jpg","moc1_5.jpg"]
+moc_2 = ["moc2_1.jpg","moc2_2.jpg","moc2_3.jpg","moc2_4.jpg","moc2_5.jpg"]
+moc_3 = ["moc3_1.jpg","moc3_2.jpg","moc3_3.jpg","moc3_4.jpg","moc3_5.jpg"]
+mtc_1 = ["mtc1_1.jpg","mtc1_2.jpg","mtc1_3.jpg","mtc1_4.jpg","mtc1_5.jpg"]
+mtc_2 = ["mtc2_1.jpg","mtc2_2.jpg","mtc2_3.jpg","mtc2_4.jpg","mtc2_5.jpg"]
+mtc_3 = ["mtc3_1.jpg","mtc3_2.jpg","mtc3_3.jpg","mtc3_4.jpg","mtc3_5.jpg"]
+ping = ["ping_1.jpg","ping_2.jpg","ping_3.jpg"]
+ussd = ["ussd_1.jpg","ussd_2.jpg","ussd_3.jpg"]
+
+#GE size
+gwidth=686.16
+gheight=382.32
+#audit data size
+awidth=329.76
+aheight=461.52
+#panoramic size
+pwidth=231.84
+pheight=159.84
+#sectoral size
+swidth=283.68
+sheight=131.04
+#data audit size
+dwidth=278.64
+dheight=128.16
+#speedtest size
+speedwidth=121.68
+speedheight=260.64
+#MOC and MTC size
+mpeedwidth=129.6
+mpeedheight=277.2
+#pingtest size
+pingwidth=321.12
+pingheight=209.52
+#ussd size
+uwidth=186.48
+uheight=166.32
+#collect data dari raw data
+#data sheet Cover
+SiteID = df.loc[0,'Site id']
+Typeofwork = df.loc[0,'SOW Confirm']
+NEtype = df.loc[0,'TYPE_NE']
+Band = df.loc[0,'BAND LTE']
+Batch = df.loc[0,'Program ID']
+eNodeBName = df.loc[0,'OSS LTE eNodeB name']
+eNodeBID = df.loc[0,'OSS LTE eNodeB id']
+PONumber = df.loc[0,'PMO']
+SOWco = df.loc[0,'LAYER']
+#data sheet GE
+SiteName = eNodeBName
+Tipetower = df.loc[0,'Site Type']
+TowerHeigth = df.loc[0,'Height']
+Long = df.loc[0,'Longitude']
+Lat = df.loc[0,'Latitude']
+#data sheet data audit
+SectorID = eNodeBName
+AntennaType = df.loc[0,'Antenna type']
+Height = TowerHeigth
+Az_1 = df.loc[0,'Azimuth']
+Az_2 = df.loc[1,'Azimuth']
+Az_3 = df.loc[2,'Azimuth']
+Mec_1 = df.loc[0,'M-DownTilt']
+Mec_2 = df.loc[1,'M-DownTilt']
+Mec_3 = df.loc[2,'M-DownTilt']
+#data sheet KPI
+CellID_1 = df.loc[0,'Cell id']
+CellID_2 = df.loc[1,'Cell id']
+CellID_3 = df.loc[2,'Cell id']
+Tac = df.loc[0,'TAC'] #semua sector
+Pci_1 = df.loc[0,'PCI']
+Pci_2 = df.loc[1,'PCI']
+Pci_3 = df.loc[2,'PCI']
+#mengisi data sheet Cover
+sh_cover.cells(9,4).value = SiteID
+sh_cover.cells(10,4).value = Typeofwork
+sh_cover.cells(11,4).value = NEtype
+sh_cover.cells(12,4).value = Band
+sh_cover.cells(13,4).value = Batch
+sh_cover.cells(9,15).value = eNodeBName
+sh_cover.cells(10,15).value = eNodeBID
+sh_cover.cells(11,15).value = PONumber
+sh_cover.cells(12,15).value = SOWco
+print('sheet Cover done')
+#mengisi data sheet GE
+sh_ge.cells(9,2).value = Tipetower
+sh_ge.cells(10,3).value = f'{TowerHeigth} M'
+sh_ge.cells(8,5).value = Long
+sh_ge.cells(8,6).value = Lat
+#memasukkan gambar GE
+try:
+    gename = 'ge.jpg'
+    left=sh_ge.Cells(1,1).Left #(1,required_coloumn)
+    top=sh_ge.Cells(23,1).Top #(required_row,1)
+    sh_ge.Shapes.AddPicture(f'{pic_path}/{gename}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=gwidth, Height=gheight)
+except:
+    pass
+print('sheet GE done')
+#memasukkan gambar audit data
+for i in auditdata:
+    try:
+        #compas, antennaheight, tower photo, sitename
+        if i in os.listdir(pic_path) and i == auditdata[0]:
+            left=sh_auditdata.Cells(1,1).Left #(1,required_coloumn)
+            top=sh_auditdata.Cells(8,1).Top #(required_row,1)
+            sh_auditdata.Shapes.AddPicture(f'{pic_path}/{auditdata[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=awidth, Height=aheight)
+        if i in os.listdir(pic_path) and i == auditdata[1]:
+            left=sh_auditdata.Cells(1,4).Left #(1,required_coloumn)
+            top=sh_auditdata.Cells(8,1).Top #(required_row,1)
+            sh_auditdata.Shapes.AddPicture(f'{pic_path}/{auditdata[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=awidth, Height=aheight)
+        if i in os.listdir(pic_path) and i == auditdata[2]:
+            left=sh_auditdata.Cells(1,1).Left #(1,required_coloumn)
+            top=sh_auditdata.Cells(40,1).Top #(required_row,1)
+            sh_auditdata.Shapes.AddPicture(f'{pic_path}/{auditdata[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=awidth, Height=aheight)
+        if i in os.listdir(pic_path) and i == auditdata[3]:
+            left=sh_auditdata.Cells(1,4).Left #(1,required_coloumn)
+            top=sh_auditdata.Cells(40,1).Top #(required_row,1)
+            sh_auditdata.Shapes.AddPicture(f'{pic_path}/{auditdata[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=awidth, Height=aheight)
+    except:
+        pass
+#megisi data sheet Panoramicpole
+ws.cells(53,1).value = eNodeBName
+ws.cells(54,1).value = eNodeBName
+ws.cells(55,1).value = eNodeBName
+ws.cells(53,5).value = AntennaType
+ws.cells(54,5).value = AntennaType
+ws.cells(55,5).value = AntennaType
+ws.cells(53,7).value = 1
+ws.cells(54,7).value = 2
+ws.cells(55,7).value = 3
+ws.cells(53,8).value = Height
+ws.cells(54,8).value = Height
+ws.cells(55,8).value = Height
+ws.cells(53,9).value = Az_1
+ws.cells(54,9).value = Az_2
+ws.cells(55,9).value = Az_3
+ws.cells(53,10).value = Mec_1
+ws.cells(54,10).value = Mec_2
+ws.cells(55,10).value = Mec_3
+ws.cells(53,15).value = Az_1
+ws.cells(54,15).value = Az_2
+ws.cells(55,15).value = Az_3
+ws.cells(53,16).value = Mec_1
+ws.cells(54,16).value = Mec_2
+ws.cells(55,16).value = Mec_3
+#memasukkan gambar Panoramic
+for i in panoramic:
+    try:
+        #panoramic 0, 30, 60, 90
+        if i in os.listdir(pic_path) and i == panoramic[0]:
+            left=ws.Cells(1,1).Left #(1,required_coloumn)
+            top=ws.Cells(10,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[1]:
+            left=ws.Cells(1,6).Left #(1,required_coloumn)
+            top=ws.Cells(10,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[2]:
+            left=ws.Cells(1,11).Left #(1,required_coloumn)
+            top=ws.Cells(10,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[3]:
+            left=ws.Cells(1,16).Left #(1,required_coloumn)
+            top=ws.Cells(10,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        #panoramic 120, 150, 180, 210
+        if i in os.listdir(pic_path) and i == panoramic[4]:
+            left=ws.Cells(1,1).Left #(1,required_coloumn)
+            top=ws.Cells(22,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[5]:
+            left=ws.Cells(1,6).Left #(1,required_coloumn)
+            top=ws.Cells(22,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[5]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[6]:
+            left=ws.Cells(1,11).Left #(1,required_coloumn)
+            top=ws.Cells(22,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[6]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[7]:
+            left=ws.Cells(1,16).Left #(1,required_coloumn)
+            top=ws.Cells(22,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[7]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        #panoramic 240, 270, 300, 330
+        if i in os.listdir(pic_path) and i == panoramic[8]:
+            left=ws.Cells(1,1).Left #(1,required_coloumn)
+            top=ws.Cells(34,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[8]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[9]:
+            left=ws.Cells(1,6).Left #(1,required_coloumn)
+            top=ws.Cells(34,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[9]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[10]:
+            left=ws.Cells(1,11).Left #(1,required_coloumn)
+            top=ws.Cells(34,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[10]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+        if i in os.listdir(pic_path) and i == panoramic[11]:
+            left=ws.Cells(1,16).Left #(1,required_coloumn)
+            top=ws.Cells(34,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{panoramic[11]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pwidth, Height=pheight)
+    except:
+        pass
+for i in sec1:
+    try:
+        #azimut , mt, label, RRU
+        if i in os.listdir(pic_path) and i == sec1[0]:
+            left=ws.Cells(1,2).Left #(1,required_coloumn)
+            top=ws.Cells(59,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{sec1[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=swidth, Height=sheight)
+        if i in os.listdir(pic_path) and i == sec1[1]:
+            left=ws.Cells(1,2).Left #(1,required_coloumn)
+            top=ws.Cells(69,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{sec1[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=swidth, Height=sheight)
+        if i in os.listdir(pic_path) and i == sec1[2]:
+            left=ws.Cells(1,2).Left #(1,required_coloumn)
+            top=ws.Cells(79,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{sec1[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=swidth, Height=sheight)
+        if i in os.listdir(pic_path) and i == sec1[3]:
+            left=ws.Cells(1,2).Left #(1,required_coloumn)
+            top=ws.Cells(89,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{sec1[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=swidth, Height=sheight)
+    except:
+        pass
+for i in sec2:
+    try:
+        #azimut , mt, label, RRU
+        if i in os.listdir(pic_path) and i == sec2[0]:
+            left=ws.Cells(1,8).Left #(1,required_coloumn)
+            top=ws.Cells(59,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{sec2[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=swidth, Height=sheight)
+        if i in os.listdir(pic_path) and i == sec2[1]:
+            left=ws.Cells(1,8).Left #(1,required_coloumn)
+            top=ws.Cells(69,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{sec2[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=swidth, Height=sheight)
+        if i in os.listdir(pic_path) and i == sec2[2]:
+            left=ws.Cells(1,8).Left #(1,required_coloumn)
+            top=ws.Cells(79,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{sec2[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=swidth, Height=sheight)
+        if i in os.listdir(pic_path) and i == sec2[3]:
+            left=ws.Cells(1,8).Left #(1,required_coloumn)
+            top=ws.Cells(89,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{sec2[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=swidth, Height=sheight)
+    except:
+        pass
+for i in sec3:
+    try:
+        #azimut , mt, label, RRU
+        if i in os.listdir(pic_path) and i == sec3[0]:
+            left=ws.Cells(1,14).Left #(1,required_coloumn)
+            top=ws.Cells(59,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{sec3[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=swidth, Height=sheight)
+        if i in os.listdir(pic_path) and i == sec3[1]:
+            left=ws.Cells(1,14).Left #(1,required_coloumn)
+            top=ws.Cells(69,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{sec3[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=swidth, Height=sheight)
+        if i in os.listdir(pic_path) and i == sec3[2]:
+            left=ws.Cells(1,14).Left #(1,required_coloumn)
+            top=ws.Cells(79,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{sec3[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=swidth, Height=sheight)
+        if i in os.listdir(pic_path) and i == sec3[3]:
+            left=ws.Cells(1,14).Left #(1,required_coloumn)
+            top=ws.Cells(89,1).Top #(required_row,1)
+            ws.Shapes.AddPicture(f'{pic_path}/{sec3[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=swidth, Height=sheight)
+    except:
+        pass
+print('sheet Panoramic done')
+for i in dataaudit_1:
+    try:
+        #sector1 backview, sideview, bottomview, electrical
+        if i in os.listdir(pic_path) and i == dataaudit_1[0]:
+            left=sh_dataaudit.Cells(1,1).Left #(1,required_coloumn)
+            top=sh_dataaudit.Cells(8,1).Top #(required_row,1)
+            sh_dataaudit.Shapes.AddPicture(f'{pic_path}/{dataaudit_1[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=dwidth, Height=dheight)
+        if i in os.listdir(pic_path) and i == dataaudit_1[1]:
+            left=sh_dataaudit.Cells(1,1).Left #(1,required_coloumn)
+            top=sh_dataaudit.Cells(18,1).Top #(required_row,1)
+            sh_dataaudit.Shapes.AddPicture(f'{pic_path}/{dataaudit_1[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=dwidth, Height=dheight)
+        if i in os.listdir(pic_path) and i == dataaudit_1[2]:
+            left=sh_dataaudit.Cells(1,1).Left #(1,required_coloumn)
+            top=sh_dataaudit.Cells(28,1).Top #(required_row,1)
+            sh_dataaudit.Shapes.AddPicture(f'{pic_path}/{dataaudit_1[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=dwidth, Height=dheight)
+        if i in os.listdir(pic_path) and i == dataaudit_1[3]:
+            left=sh_dataaudit.Cells(1,1).Left #(1,required_coloumn)
+            top=sh_dataaudit.Cells(38,1).Top #(required_row,1)
+            sh_dataaudit.Shapes.AddPicture(f'{pic_path}/{dataaudit_1[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=dwidth, Height=dheight)
+    except:
+        pass
+for i in dataaudit_2:
+    try:
+        #sector2 backview, sideview, bottomview, electrical
+        if i in os.listdir(pic_path) and i == dataaudit_2[0]:
+            left=sh_dataaudit.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_dataaudit.Cells(8,1).Top #(required_row,1)
+            sh_dataaudit.Shapes.AddPicture(f'{pic_path}/{dataaudit_2[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=dwidth, Height=dheight)
+        if i in os.listdir(pic_path) and i == dataaudit_2[1]:
+            left=sh_dataaudit.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_dataaudit.Cells(18,1).Top #(required_row,1)
+            sh_dataaudit.Shapes.AddPicture(f'{pic_path}/{dataaudit_2[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=dwidth, Height=dheight)
+        if i in os.listdir(pic_path) and i == dataaudit_2[2]:
+            left=sh_dataaudit.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_dataaudit.Cells(28,1).Top #(required_row,1)
+            sh_dataaudit.Shapes.AddPicture(f'{pic_path}/{dataaudit_2[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=dwidth, Height=dheight)
+        if i in os.listdir(pic_path) and i == dataaudit_2[3]:
+            left=sh_dataaudit.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_dataaudit.Cells(38,1).Top #(required_row,1)
+            sh_dataaudit.Shapes.AddPicture(f'{pic_path}/{dataaudit_2[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=dwidth, Height=dheight)
+    except:
+        pass
+for i in dataaudit_3:
+    try:
+        #sector3 backview, sideview, bottomview, electrical
+        if i in os.listdir(pic_path) and i == dataaudit_3[0]:
+            left=sh_dataaudit.Cells(1,13).Left #(1,required_coloumn)
+            top=sh_dataaudit.Cells(8,1).Top #(required_row,1)
+            sh_dataaudit.Shapes.AddPicture(f'{pic_path}/{dataaudit_3[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=dwidth, Height=dheight)
+        if i in os.listdir(pic_path) and i == dataaudit_3[1]:
+            left=sh_dataaudit.Cells(1,13).Left #(1,required_coloumn)
+            top=sh_dataaudit.Cells(18,1).Top #(required_row,1)
+            sh_dataaudit.Shapes.AddPicture(f'{pic_path}/{dataaudit_3[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=dwidth, Height=dheight)
+        if i in os.listdir(pic_path) and i == dataaudit_3[2]:
+            left=sh_dataaudit.Cells(1,13).Left #(1,required_coloumn)
+            top=sh_dataaudit.Cells(28,1).Top #(required_row,1)
+            sh_dataaudit.Shapes.AddPicture(f'{pic_path}/{dataaudit_3[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=dwidth, Height=dheight)
+        if i in os.listdir(pic_path) and i == dataaudit_3[3]:
+            left=sh_dataaudit.Cells(1,13).Left #(1,required_coloumn)
+            top=sh_dataaudit.Cells(38,1).Top #(required_row,1)
+            sh_dataaudit.Shapes.AddPicture(f'{pic_path}/{dataaudit_3[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=dwidth, Height=dheight)
+    except:
+        pass
+print('sheet data audit done')
+#mengisi data sheet KPI
+sh_kpi.cells(44,6).value = sh_kpi.cells(44,10).value = sh_kpi.cells(44,14).value = SiteID
+sh_kpi.cells(46,6).value = CellID_1
+sh_kpi.cells(46,10).value = CellID_2
+sh_kpi.cells(46,14).value = CellID_3
+sh_kpi.cells(48,6).value = sh_kpi.cells(48,10).value = sh_kpi.cells(48,14).value = eNodeBID
+sh_kpi.cells(50,6).value = sh_kpi.cells(50,10).value = sh_kpi.cells(50,14).value = Tac
+sh_kpi.cells(52,6).value = Pci_1
+sh_kpi.cells(52,10).value = Pci_2
+sh_kpi.cells(52,14).value = Pci_3
+print('sheet KPI done')
+for i in speedtest_1:
+    try:
+        #sector1 lock, unlock, volte, sms
+        if i in os.listdir(pic_path) and i == speedtest_1[0]:
+            left=sh_speedtest.Cells(1,2).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(12,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_1[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_1[1]:
+            left=sh_speedtest.Cells(1,3).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(12,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_1[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_1[2]:
+            left=sh_speedtest.Cells(1,2).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(33,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_1[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_1[3]:
+            left=sh_speedtest.Cells(1,3).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(33,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_1[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_1[4]:
+            left=sh_speedtest.Cells(1,2).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(60,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_1[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_1[5]:
+            left=sh_speedtest.Cells(1,3).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(60,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_1[5]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+    except:
+        pass
+for i in speedtest_2:
+    try:
+        #sector2 lock, unlock, volte, sms
+        if i in os.listdir(pic_path) and i == speedtest_2[0]:
+            left=sh_speedtest.Cells(1,5).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(12,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_2[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_2[1]:
+            left=sh_speedtest.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(12,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_2[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_2[2]:
+            left=sh_speedtest.Cells(1,5).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(33,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_2[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_2[3]:
+            left=sh_speedtest.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(33,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_2[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_2[4]:
+            left=sh_speedtest.Cells(1,5).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(60,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_2[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_2[5]:
+            left=sh_speedtest.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(60,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_2[5]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+    except:
+        pass
+for i in speedtest_3:
+    try:
+        #sector3 lock, unlock, volte, sms
+        if i in os.listdir(pic_path) and i == speedtest_3[0]:
+            left=sh_speedtest.Cells(1,9).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(12,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_3[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_3[1]:
+            left=sh_speedtest.Cells(1,11).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(12,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_3[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_3[2]:
+            left=sh_speedtest.Cells(1,9).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(33,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_3[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_3[3]:
+            left=sh_speedtest.Cells(1,11).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(33,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_3[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_3[4]:
+            left=sh_speedtest.Cells(1,9).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(60,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_3[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+        if i in os.listdir(pic_path) and i == speedtest_3[5]:
+            left=sh_speedtest.Cells(1,11).Left #(1,required_coloumn)
+            top=sh_speedtest.Cells(60,1).Top #(required_row,1)
+            sh_speedtest.Shapes.AddPicture(f'{pic_path}/{speedtest_3[5]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=speedwidth, Height=speedheight)
+    except:
+        pass
+print('sheet Speedtest done')
+for i in moc_1:
+    try:
+        #sector1 MOC basicinfo lte, voice call in LTE, voice call in csfb, testplan, event
+        if i in os.listdir(pic_path) and i == moc_1[0]:
+            left=sh_moc.Cells(1,1).Left #(1,required_coloumn)
+            top=sh_moc.Cells(7,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_1[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == moc_1[1]:
+            left=sh_moc.Cells(1,4).Left #(1,required_coloumn)
+            top=sh_moc.Cells(7,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_1[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == moc_1[2]:
+            left=sh_moc.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_moc.Cells(7,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_1[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == moc_1[3]:
+            left=sh_moc.Cells(1,10).Left #(1,required_coloumn)
+            top=sh_moc.Cells(7,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_1[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == moc_1[4]:
+            left=sh_moc.Cells(1,13).Left #(1,required_coloumn)
+            top=sh_moc.Cells(7,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_1[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+    except:
+        pass
+for i in moc_2:
+    try:
+        #sector2 MOC basicinfo lte, voice call in LTE, voice call in csfb, testplan, event
+        if i in os.listdir(pic_path) and i == moc_2[0]:
+            left=sh_moc.Cells(1,1).Left #(1,required_coloumn)
+            top=sh_moc.Cells(28,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_2[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == moc_2[1]:
+            left=sh_moc.Cells(1,4).Left #(1,required_coloumn)
+            top=sh_moc.Cells(28,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_2[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == moc_2[2]:
+            left=sh_moc.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_moc.Cells(28,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_2[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == moc_2[3]:
+            left=sh_moc.Cells(1,10).Left #(1,required_coloumn)
+            top=sh_moc.Cells(28,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_2[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == moc_2[4]:
+            left=sh_moc.Cells(1,13).Left #(1,required_coloumn)
+            top=sh_moc.Cells(28,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_2[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+    except:
+        pass
+for i in moc_3:
+    try:
+        #sector3 MOC basicinfo lte, voice call in LTE, voice call in csfb, testplan, event
+        if i in os.listdir(pic_path) and i == moc_3[0]:
+            left=sh_moc.Cells(1,1).Left #(1,required_coloumn)
+            top=sh_moc.Cells(49,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_3[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == moc_3[1]:
+            left=sh_moc.Cells(1,4).Left #(1,required_coloumn)
+            top=sh_moc.Cells(49,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_3[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == moc_3[2]:
+            left=sh_moc.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_moc.Cells(49,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_3[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == moc_3[3]:
+            left=sh_moc.Cells(1,10).Left #(1,required_coloumn)
+            top=sh_moc.Cells(49,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_3[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == moc_3[4]:
+            left=sh_moc.Cells(1,13).Left #(1,required_coloumn)
+            top=sh_moc.Cells(49,1).Top #(required_row,1)
+            sh_moc.Shapes.AddPicture(f'{pic_path}/{moc_3[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+    except:
+        pass
+print('sheet MOC done')
+for i in mtc_1:
+    try:
+        #sector1 MTC basicinfo lte, voice call in LTE, voice call in csfb, testplan, event
+        if i in os.listdir(pic_path) and i == mtc_1[0]:
+            left=sh_mtc.Cells(1,1).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(7,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_1[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == mtc_1[1]:
+            left=sh_mtc.Cells(1,4).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(7,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_1[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == mtc_1[2]:
+            left=sh_mtc.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(7,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_1[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == mtc_1[3]:
+            left=sh_mtc.Cells(1,10).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(7,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_1[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == mtc_1[4]:
+            left=sh_mtc.Cells(1,13).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(7,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_1[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+    except:
+        pass
+for i in mtc_2:
+    try:
+        #sector2 MTC basicinfo lte, voice call in LTE, voice call in csfb, testplan, event
+        if i in os.listdir(pic_path) and i == mtc_2[0]:
+            left=sh_mtc.Cells(1,1).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(28,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_2[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == mtc_2[1]:
+            left=sh_mtc.Cells(1,4).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(28,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_2[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == mtc_2[2]:
+            left=sh_mtc.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(28,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_2[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == mtc_2[3]:
+            left=sh_mtc.Cells(1,10).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(28,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_2[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == mtc_2[4]:
+            left=sh_mtc.Cells(1,13).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(28,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_2[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+    except:
+        pass
+for i in mtc_3:
+    try:
+        #sector3 MTC basicinfo lte, voice call in LTE, voice call in csfb, testplan, event
+        if i in os.listdir(pic_path) and i == mtc_3[0]:
+            left=sh_mtc.Cells(1,1).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(49,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_3[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == mtc_3[1]:
+            left=sh_mtc.Cells(1,4).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(49,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_3[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == mtc_3[2]:
+            left=sh_mtc.Cells(1,7).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(49,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_3[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == mtc_3[3]:
+            left=sh_mtc.Cells(1,10).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(49,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_3[3]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+        if i in os.listdir(pic_path) and i == mtc_3[4]:
+            left=sh_mtc.Cells(1,13).Left #(1,required_coloumn)
+            top=sh_mtc.Cells(49,1).Top #(required_row,1)
+            sh_mtc.Shapes.AddPicture(f'{pic_path}/{mtc_3[4]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=mpeedwidth, Height=mpeedheight)
+    except:
+        pass
+print('sheet MTC done')
+for i in ping:
+    try:
+        #ping sec1, sec2, sec3
+        if i in os.listdir(pic_path) and i == ping[0]:
+            left=sh_ping.Cells(1,4).Left #(1,required_coloumn)
+            top=sh_ping.Cells(7,1).Top #(required_row,1)
+            sh_ping.Shapes.AddPicture(f'{pic_path}/{ping[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pingwidth, Height=pingheight)
+        if i in os.listdir(pic_path) and i == ping[1]:
+            left=sh_ping.Cells(1,4).Left #(1,required_coloumn)
+            top=sh_ping.Cells(22,1).Top #(required_row,1)
+            sh_ping.Shapes.AddPicture(f'{pic_path}/{ping[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pingwidth, Height=pingheight)
+        if i in os.listdir(pic_path) and i == ping[2]:
+            left=sh_ping.Cells(1,4).Left #(1,required_coloumn)
+            top=sh_ping.Cells(37,1).Top #(required_row,1)
+            sh_ping.Shapes.AddPicture(f'{pic_path}/{ping[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=pingwidth, Height=pingheight)
+    except:
+        pass
+for i in ussd:
+    try:
+        #ussd sec1, sec2, sec3
+        if i in os.listdir(pic_path) and i == ussd[0]:
+            left=sh_ping.Cells(1,1).Left #(1,required_coloumn)
+            top=sh_ping.Cells(56,1).Top #(required_row,1)
+            sh_ping.Shapes.AddPicture(f'{pic_path}/{ussd[0]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=uwidth, Height=uheight)
+        if i in os.listdir(pic_path) and i == ussd[1]:
+            left=sh_ping.Cells(1,6).Left #(1,required_coloumn)
+            top=sh_ping.Cells(56,1).Top #(required_row,1)
+            sh_ping.Shapes.AddPicture(f'{pic_path}/{ussd[1]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=uwidth, Height=uheight)
+        if i in os.listdir(pic_path) and i == ussd[2]:
+            left=sh_ping.Cells(1,11).Left #(1,required_coloumn)
+            top=sh_ping.Cells(56,1).Top #(required_row,1)
+            sh_ping.Shapes.AddPicture(f'{pic_path}/{ussd[2]}',LinkToFile=False, SaveWithDocument=True, Left=left, Top=top, Width=uwidth, Height=uheight)
+    except:
+        pass
+print('sheet PING done')
+wb.save
+wb.Close()
+#Excel.Quit()
