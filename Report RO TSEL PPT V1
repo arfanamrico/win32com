@@ -1,0 +1,157 @@
+import win32com.client
+import pandas as pd
+import os
+
+dirpath = r"E:\RO TSEL JABO Project\Logfiles\KRW275_in progress\capturan"
+Application = win32com.client.Dispatch("PowerPoint.Application")
+Application.Visible = True # shows what's happening, not required, but helpful for now
+Presentation = Application.Presentations.Open(r"E:\Template\RO_Masterppt.pptx") # open file ppt
+pano = ["0.jpg","30.jpg","60.jpg","90.jpg","120.jpg","150.jpg","180.jpg","210.jpg","240.jpg","270.jpg","300.jpg","330.jpg"]
+auditdata = ["compas.jpg","tower.jpg"]
+azz = ["azz_1.jpg","azz_2.jpg","azz_3.jpg","azzcom_1.jpg","azzcom_2.jpg","azzcom_3.jpg"]
+mt = ["mt_1.jpg","mt_2.jpg","mt_3.jpg"]
+cetlock = ["lock1_1.jpg","lock1_2.jpg","lock2_1.jpg","lock2_2.jpg","lock3_1.jpg","lock3_2.jpg"]
+histogram = ["histo_lock.jpg","histo_unlock.jpg"]
+plotlock = ["rsrp.jpg","sinr.jpg","pci.jpg","earfcn.jpg"]
+plotunlock = ["rsrp1.jpg","sinr1.jpg","pci1.jpg","earfcn1.jpg"]
+
+def header ():
+    tb1 = slide_i.Shapes.AddTextbox(1,41.04,5.04,754.56,36.72)
+    tb1text = tb1.TextFrame.TextRange
+    tb1text.Text = f'{headtext}_LOCK {band}'
+    ppfont = tb1text.font
+    ppfont.size = 24
+    ppfont.Name = 'Segoe UI (Body)'
+    ppfont.Shadow = True
+    #ppfont.Underline = True
+    #ppfont.Italic = True
+    ppfont.Color.RGB = 255 #red color
+def oss ():
+    tb1 = slide_i.Shapes.AddTextbox(1,0,7.92,558,32.4)
+    tb1text = tb1.TextFrame.TextRange
+    tb1text.Text = teks
+    ppfont = tb1text.font
+    ppfont.size = 21
+    ppfont.Name = 'Poppins'
+    ppfont.Bold = True
+    ppfont.Color.RGB = 2552550 #white color
+def nilai():
+    ppshtxt = ppsh_i.TextFrame.TextRange
+    ppshtxt.Text = nilainya
+    ppfonts = ppshtxt.font
+    ppfonts.Name = 'Bahnschrift'
+    ppfonts.size = 12
+    ppfonts.Bold = True
+    ppfonts.Color.RGB = 255255255 #black color
+def baca ():
+    global df
+    df = pd.read_excel(path)
+for name in os.listdir(dirpath):
+    path = os.path.join(dirpath, name)    
+    if path.endswith('.xlsx') and os.path.isfile(path):
+        baca()
+# #Slide1 = Presentation.Slides.Add(1, 12) # new slide, at beginning
+#mengisi slide judul
+slide0 = Presentation.slides[0]
+tbj = slide0.Shapes.AddTextbox(1,353.52,246.96,424.8,64.8)
+tbjtext = tbj.TextFrame.TextRange
+tbjtext.Text = df.loc[0,'Region_NEW']
+ppfont = tbjtext.font
+ppfont.size = 24
+ppfont.Name = 'Calibri'
+ppfont.Bold = True
+ppfont.Color.RGB = 0 #black color
+
+slide_i = Presentation.slides[1]
+teks = f"New NE | {df.loc[0,'DU ID']}"
+oss()
+slide_i = Presentation.slides[2]
+teks = f"New NE | {df.loc[0,'DU ID']}"
+oss()
+
+slide_i = Presentation.slides[3]
+headtext = df.loc[0,'OSS LTE eNodeB name']
+band = df.loc[0,'BAND LTE']
+header()
+Slide3 = Presentation.slides[3]
+ppsh_i = Slide3.shapes[18] #nilai azimuth sec1 
+nilainya = df.loc[0,'Azimuth']
+nilai()
+ppsh_i = Slide3.shapes[17] #nilai azimuth sec2 
+nilainya = df.loc[1,'Azimuth']
+nilai()
+ppsh_i = Slide3.shapes[6] #nilai azimuth sec3 
+nilainya = df.loc[2,'Azimuth']
+nilai()
+ppsh_i = Slide3.shapes[27] #nilai sec1 mechanical
+nilainya = df.loc[0,'M-DownTilt']
+nilai()
+ppsh_i = Slide3.shapes[26] #nilai sec2 mechanical
+nilainya = df.loc[1,'M-DownTilt']
+nilai()
+ppsh_i = Slide3.shapes[25] #nilai sec3 mechanical
+nilainya = df.loc[2,'M-DownTilt']
+nilai()
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{pano[0]}', LinkToFile=False, SaveWithDocument=True, Left=59.04, Top=86.4, Width=95.76, Height=77.76)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{pano[1]}', LinkToFile=False, SaveWithDocument=True, Left=178.56, Top=86.4, Width=95.76, Height=77.76)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{pano[2]}', LinkToFile=False, SaveWithDocument=True, Left=299.52, Top=86.4, Width=95.76, Height=77.76)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{pano[3]}', LinkToFile=False, SaveWithDocument=True, Left=421.2, Top=86.4, Width=95.76, Height=77.76)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{pano[4]}', LinkToFile=False, SaveWithDocument=True, Left=59.04, Top=187.2, Width=95.76, Height=77.76)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{pano[5]}', LinkToFile=False, SaveWithDocument=True, Left=178.56, Top=187.2, Width=95.76, Height=77.76)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{pano[6]}', LinkToFile=False, SaveWithDocument=True, Left=299.52, Top=187.2, Width=95.76, Height=77.76)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{pano[7]}', LinkToFile=False, SaveWithDocument=True, Left=421.2, Top=187.2, Width=95.76, Height=77.76)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{pano[8]}', LinkToFile=False, SaveWithDocument=True, Left=59.04, Top=289.44, Width=95.76, Height=77.76)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{pano[9]}', LinkToFile=False, SaveWithDocument=True, Left=178.56, Top=289.44, Width=95.76, Height=77.76)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{pano[10]}', LinkToFile=False, SaveWithDocument=True, Left=299.52, Top=289.44, Width=95.76, Height=77.76)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{pano[11]}', LinkToFile=False, SaveWithDocument=True, Left=421.2, Top=289.44, Width=95.76, Height=77.76)
+
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{auditdata[0]}', LinkToFile=False, SaveWithDocument=True, Left=58.32, Top=400.32, Width=100.8, Height=102.24)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{auditdata[1]}', LinkToFile=False, SaveWithDocument=True, Left=182.88, Top=400.32, Width=90.72, Height=102.24)
+#azimuth with compass
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{azz[3]}', LinkToFile=False, SaveWithDocument=True, Left=556.56, Top=84.96, Width=111.6, Height=79.2)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{azz[4]}', LinkToFile=False, SaveWithDocument=True, Left=694.8, Top=84.96, Width=111.6, Height=79.2)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{azz[5]}', LinkToFile=False, SaveWithDocument=True, Left=832.32, Top=84.96, Width=111.6, Height=79.2)
+#azimuth no compass
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{azz[0]}', LinkToFile=False, SaveWithDocument=True, Left=556.56, Top=208.08, Width=111.6, Height=79.2)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{azz[1]}', LinkToFile=False, SaveWithDocument=True, Left=694.8, Top=208.08, Width=111.6, Height=79.2)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{azz[2]}', LinkToFile=False, SaveWithDocument=True, Left=832.32, Top=208.08, Width=111.6, Height=79.2)
+#mechanical
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{mt[0]}', LinkToFile=False, SaveWithDocument=True, Left=556.56, Top=331.2, Width=111.6, Height=79.2)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{mt[1]}', LinkToFile=False, SaveWithDocument=True, Left=694.8, Top=331.2, Width=111.6, Height=79.2)
+Slide3.Shapes.AddPicture(FileName=f'{dirpath}/{mt[2]}', LinkToFile=False, SaveWithDocument=True, Left=832.32, Top=331.2, Width=111.6, Height=79.2)
+#plotting dt
+slide_i = Presentation.slides[4]
+headtext = df.loc[0,'OSS LTE eNodeB name']
+band = df.loc[0,'BAND LTE']
+header()
+Slide4 = Presentation.slides[4]
+Slide4.Shapes.AddPicture(FileName=f'{dirpath}/{plotlock[0]}', LinkToFile=False, SaveWithDocument=True, Left=51.12, Top=94.32, Width=212.4, Height=145.44)
+Slide4.Shapes.AddPicture(FileName=f'{dirpath}/{plotlock[1]}', LinkToFile=False, SaveWithDocument=True, Left=278.64, Top=94.32, Width=208.8, Height=145.44)
+Slide4.Shapes.AddPicture(FileName=f'{dirpath}/{plotlock[2]}', LinkToFile=False, SaveWithDocument=True, Left=498.96, Top=94.32, Width=199.44, Height=145.44)
+Slide4.Shapes.AddPicture(FileName=f'{dirpath}/{plotlock[3]}', LinkToFile=False, SaveWithDocument=True, Left=708.48, Top=94.32, Width=198, Height=145.44)
+#unlock
+Slide4.Shapes.AddPicture(FileName=f'{dirpath}/{plotunlock[0]}', LinkToFile=False, SaveWithDocument=True, Left=51.12, Top=304.56, Width=212.4, Height=145.44)
+Slide4.Shapes.AddPicture(FileName=f'{dirpath}/{plotunlock[1]}', LinkToFile=False, SaveWithDocument=True, Left=278.64, Top=304.56, Width=208.8, Height=145.44)
+Slide4.Shapes.AddPicture(FileName=f'{dirpath}/{plotunlock[2]}', LinkToFile=False, SaveWithDocument=True, Left=498.96, Top=304.56, Width=199.44, Height=145.44)
+Slide4.Shapes.AddPicture(FileName=f'{dirpath}/{plotunlock[3]}', LinkToFile=False, SaveWithDocument=True, Left=708.48, Top=304.56, Width=198, Height=145.44)
+
+# #histogram
+slide_i = Presentation.slides[5]
+headtext = df.loc[0,'OSS LTE eNodeB name']
+band = df.loc[0,'BAND LTE']
+header()
+Slide5 = Presentation.slides[5]
+Slide5.Shapes.AddPicture(FileName=f'{dirpath}/{histogram[0]}', LinkToFile=False, SaveWithDocument=True, Left=41.04, Top=74.88, Width=848.88, Height=203.04)
+Slide5.Shapes.AddPicture(FileName=f'{dirpath}/{histogram[1]}', LinkToFile=False, SaveWithDocument=True, Left=41.04, Top=321.12, Width=848.88, Height=203.04)
+#CET
+slide_i = Presentation.slides[6]
+headtext = df.loc[0,'OSS LTE eNodeB name']
+band = df.loc[0,'BAND LTE']
+header()
+Slide6 = Presentation.slides[6]
+Slide6.Shapes.AddPicture(FileName=f'{dirpath}/{cetlock[0]}', LinkToFile=False, SaveWithDocument=True, Left=50.4, Top=102.96, Width=120.24, Height=243.36)
+Slide6.Shapes.AddPicture(FileName=f'{dirpath}/{cetlock[1]}', LinkToFile=False, SaveWithDocument=True, Left=202.32, Top=102.96, Width=120.24, Height=243.36)
+Slide6.Shapes.AddPicture(FileName=f'{dirpath}/{cetlock[2]}', LinkToFile=False, SaveWithDocument=True, Left=349.2, Top=102.96, Width=120.24, Height=243.36)
+Slide6.Shapes.AddPicture(FileName=f'{dirpath}/{cetlock[3]}', LinkToFile=False, SaveWithDocument=True, Left=491.04, Top=102.96, Width=120.24, Height=243.36)
+Slide6.Shapes.AddPicture(FileName=f'{dirpath}/{cetlock[4]}', LinkToFile=False, SaveWithDocument=True, Left=626.4, Top=102.96, Width=120.24, Height=243.36)
+Slide6.Shapes.AddPicture(FileName=f'{dirpath}/{cetlock[5]}', LinkToFile=False, SaveWithDocument=True, Left=773.28, Top=102.96, Width=120.24, Height=243.36)
