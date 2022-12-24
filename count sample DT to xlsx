@@ -1,0 +1,250 @@
+import win32com.client
+import pandas as pd
+import os
+
+dirpath = r"E:\RO TSEL JABO Project\4T6S\JKU119\JKU119 before\JKU119\mov\Map"
+Excel = win32com.client.Dispatch("Excel.Application")
+wb = Excel.Workbooks.Open(r"E:\Template\4T6S_DT sample.xlsx")
+sh_smpl =wb.Worksheets("sample")
+
+def cek ():
+    if nama[0] == 'RSRP':
+        tmp = []
+        r1=r2=r3=r4=r5=0
+        if nama[1] == 'L1800' and nama[2] == 'PRE':
+            global RSRP1800
+            df = pd.read_csv(path)
+            for i in range (0, len(df['No.'])):
+                if df.iloc[i,4] > -80.00 : r1 += 1
+                if df.iloc[i,4] <= -80.00 and df.iloc[i,4] > -95.00 : r2 += 1
+                if df.iloc[i,4] <= -95.00 and df.iloc[i,4] > -100.00 : r3 += 1
+                if df.iloc[i,4] <= -100.00 and df.iloc[i,4] > -110.00 : r4 += 1
+                if df.iloc[i,4] <= -110.00 and df.iloc[i,4] >= -150.00 : r5 += 1
+            smpl = len(df['No.'])
+            tmp.append([r1,r2,r3,r4,r5, smpl])
+            RSRP1800 = tmp[0]
+            sh_smpl.cells(3,2).value = RSRP1800[0]
+            sh_smpl.cells(4,2).value = RSRP1800[1]
+            sh_smpl.cells(5,2).value = RSRP1800[2]
+            sh_smpl.cells(6,2).value = RSRP1800[3]
+            sh_smpl.cells(7,2).value = RSRP1800[4]
+            print(nama[0]+nama[1],RSRP1800)
+        if nama[1] == 'L900':
+            global RSRP900
+            df = pd.read_csv(path)
+            for i in range (0, len(df['No.'])):
+                if df.iloc[i,4] > -80.00 : r1 += 1
+                if df.iloc[i,4] <= -80.00 and df.iloc[i,4] > -95.00 : r2 += 1
+                if df.iloc[i,4] <= -95.00 and df.iloc[i,4] > -100.00 : r3 += 1
+                if df.iloc[i,4] <= -100.00 and df.iloc[i,4] > -110.00 : r4 += 1
+                if df.iloc[i,4] <= -110.00 and df.iloc[i,4] >= -150.00 : r5 += 1
+            smpl = len(df['No.'])
+            tmp.append([r1,r2,r3,r4,r5, smpl])
+            RSRP900 = tmp[0]
+            sh_smpl.cells(3,5).value = RSRP900[0]
+            sh_smpl.cells(4,5).value = RSRP900[1]
+            sh_smpl.cells(5,5).value = RSRP900[2]
+            sh_smpl.cells(6,5).value = RSRP900[3]
+            sh_smpl.cells(7,5).value = RSRP900[4]
+            print(nama[0]+nama[1],RSRP900)
+        if nama[1] == 'L2100':
+            global RSRP2100
+            df = pd.read_csv(path)
+            for i in range (0, len(df['No.'])):
+                if df.iloc[i,4] > -80.00 : r1 += 1
+                if df.iloc[i,4] <= -80.00 and df.iloc[i,4] > -95.00 : r2 += 1
+                if df.iloc[i,4] <= -95.00 and df.iloc[i,4] > -100.00 : r3 += 1
+                if df.iloc[i,4] <= -100.00 and df.iloc[i,4] > -110.00 : r4 += 1
+                if df.iloc[i,4] <= -110.00 and df.iloc[i,4] >= -150.00 : r5 += 1
+            smpl = len(df['No.'])
+            tmp.append([r1,r2,r3,r4,r5, smpl])
+            RSRP2100 = tmp[0]
+            sh_smpl.cells(3,8).value = RSRP2100[0]
+            sh_smpl.cells(4,8).value = RSRP2100[1]
+            sh_smpl.cells(5,8).value = RSRP2100[2]
+            sh_smpl.cells(6,8).value = RSRP2100[3]
+            sh_smpl.cells(7,8).value = RSRP2100[4]
+            print(nama[0]+nama[1],RSRP2100)
+        if nama[1] == 'L2300':
+            global RSRP2300
+            df = pd.read_csv(path)
+            for i in range (0, len(df['No.'])):
+                if df.iloc[i,4] > -80.00 : r1 += 1
+                if df.iloc[i,4] <= -80.00 and df.iloc[i,4] > -95.00 : r2 += 1
+                if df.iloc[i,4] <= -95.00 and df.iloc[i,4] > -100.00 : r3 += 1
+                if df.iloc[i,4] <= -100.00 and df.iloc[i,4] > -110.00 : r4 += 1
+                if df.iloc[i,4] <= -110.00 and df.iloc[i,4] >= -150.00 : r5 += 1
+            smpl = len(df['No.'])
+            tmp.append([r1,r2,r3,r4,r5, smpl])
+            RSRP2300 = tmp[0]
+            sh_smpl.cells(3,11).value = RSRP2300[0]
+            sh_smpl.cells(4,11).value = RSRP2300[1]
+            sh_smpl.cells(5,11).value = RSRP2300[2]
+            sh_smpl.cells(6,11).value = RSRP2300[3]
+            sh_smpl.cells(7,11).value = RSRP2300[4]
+            print(nama[0]+nama[1],RSRP2300)
+    if nama[0] == 'SINR':
+        tmp = []
+        s1=s2=s3=s4=s5=0
+        if nama[1] == 'L1800':
+            global SINR1800
+            df = pd.read_csv(path)
+            for i in range (0, len(df['No.'])):
+                if df.iloc[i,4] > 20 and df.iloc[i,4] <= 30 : s1 += 1
+                if df.iloc[i,4] > 10 and df.iloc[i,4] <= 20 : s2 += 1
+                if df.iloc[i,4] > 0 and df.iloc[i,4] <= 10 : s3 += 1
+                if df.iloc[i,4] > -5 and df.iloc[i,4] <= 0 : s4 += 1
+                if df.iloc[i,4] >= -20 and df.iloc[i,4] <= -5 : s5 += 1
+            smpl = len(df['No.'])
+            tmp.append([s1,s2,s3,s4,s5, smpl])
+            SINR1800 = tmp[0]
+            sh_smpl.cells(18,2).value = SINR1800[0]
+            sh_smpl.cells(19,2).value = SINR1800[1]
+            sh_smpl.cells(20,2).value = SINR1800[2]
+            sh_smpl.cells(21,2).value = SINR1800[3]
+            sh_smpl.cells(22,2).value = SINR1800[4]
+            print(nama[0]+nama[1],SINR1800)
+        if nama[1] == 'L900':
+            global SINR900
+            df = pd.read_csv(path)
+            for i in range (0, len(df['No.'])):
+                if df.iloc[i,4] > 20 and df.iloc[i,4] <= 30 : s1 += 1
+                if df.iloc[i,4] > 10 and df.iloc[i,4] <= 20 : s2 += 1
+                if df.iloc[i,4] > 0 and df.iloc[i,4] <= 10 : s3 += 1
+                if df.iloc[i,4] > -5 and df.iloc[i,4] <= 0 : s4 += 1
+                if df.iloc[i,4] >= -20 and df.iloc[i,4] <= -5 : s5 += 1
+            smpl = len(df['No.'])
+            tmp.append([s1,s2,s3,s4,s5, smpl])
+            SINR900 = tmp[0]
+            sh_smpl.cells(18,5).value = SINR900[0]
+            sh_smpl.cells(19,5).value = SINR900[1]
+            sh_smpl.cells(20,5).value = SINR900[2]
+            sh_smpl.cells(21,5).value = SINR900[3]
+            sh_smpl.cells(22,5).value = SINR900[4]
+            print(nama[0]+nama[1],SINR900)
+        if nama[1] == 'L2100':
+            global SINR2100
+            df = pd.read_csv(path)
+            for i in range (0, len(df['No.'])):
+                if df.iloc[i,4] > 20 and df.iloc[i,4] <= 30 : s1 += 1
+                if df.iloc[i,4] > 10 and df.iloc[i,4] <= 20 : s2 += 1
+                if df.iloc[i,4] > 0 and df.iloc[i,4] <= 10 : s3 += 1
+                if df.iloc[i,4] > -5 and df.iloc[i,4] <= 0 : s4 += 1
+                if df.iloc[i,4] >= -20 and df.iloc[i,4] <= -5 : s5 += 1
+            smpl = len(df['No.'])
+            tmp.append([s1,s2,s3,s4,s5, smpl])
+            SINR2100 = tmp[0]
+            sh_smpl.cells(18,8).value = SINR2100[0]
+            sh_smpl.cells(19,8).value = SINR2100[1]
+            sh_smpl.cells(20,8).value = SINR2100[2]
+            sh_smpl.cells(21,8).value = SINR2100[3]
+            sh_smpl.cells(22,8).value = SINR2100[4]
+            print(nama[0]+nama[1],SINR2100)
+        if nama[1] == 'L2300':
+            global SINR2300
+            df = pd.read_csv(path)
+            for i in range (0, len(df['No.'])):
+                if df.iloc[i,4] > 20 and df.iloc[i,4] <= 30 : s1 += 1
+                if df.iloc[i,4] > 10 and df.iloc[i,4] <= 20 : s2 += 1
+                if df.iloc[i,4] > 0 and df.iloc[i,4] <= 10 : s3 += 1
+                if df.iloc[i,4] > -5 and df.iloc[i,4] <= 0 : s4 += 1
+                if df.iloc[i,4] >= -20 and df.iloc[i,4] <= -5 : s5 += 1
+            smpl = len(df['No.'])
+            tmp.append([s1,s2,s3,s4,s5, smpl])
+            SINR2300 = tmp[0]
+            sh_smpl.cells(18,11).value = SINR2300[0]
+            sh_smpl.cells(19,11).value = SINR2300[1]
+            sh_smpl.cells(20,11).value = SINR2300[2]
+            sh_smpl.cells(21,11).value = SINR2300[3]
+            sh_smpl.cells(22,11).value = SINR2300[4]
+            print(nama[0]+nama[1],SINR2300)
+    if nama[0] == 'PDCP':
+        tmp = []
+        p1=p2=p3=p4=p5=p6=0
+        if nama[1] == 'L1800':
+            global PDCP1800
+            df = pd.read_csv(path)
+            for i in range (0, len(df['No.'])):
+                if df.iloc[i,4] > 50000 and df.iloc[i,4] <= 200000 : p1 += 1
+                if df.iloc[i,4] > 16000 and df.iloc[i,4] <= 50000 : p2 += 1
+                if df.iloc[i,4] > 8000 and df.iloc[i,4] <= 16000 : p3 += 1
+                if df.iloc[i,4] > 4000 and df.iloc[i,4] <= 8000 : p4 += 1
+                if df.iloc[i,4] > 2000 and df.iloc[i,4] <= 4000 : p5 += 1
+                if df.iloc[i,4]  <= 2000 : p6 += 1
+            smpl = len(df['No.'])
+            tmp.append([p1,p2,p3,p4,p5,p6,smpl])
+            PDCP1800 = tmp[0]
+            sh_smpl.cells(33,2).value = PDCP1800[0]
+            sh_smpl.cells(34,2).value = PDCP1800[1]
+            sh_smpl.cells(35,2).value = PDCP1800[2]
+            sh_smpl.cells(36,2).value = PDCP1800[3]
+            sh_smpl.cells(37,2).value = PDCP1800[4]
+            sh_smpl.cells(38,2).value = PDCP1800[5]
+            print(nama[0]+nama[1],PDCP1800)
+        if nama[1] == 'L900':
+            global PDCP900
+            df = pd.read_csv(path)
+            for i in range (0, len(df['No.'])):
+                if df.iloc[i,4] > 50000 and df.iloc[i,4] <= 200000 : p1 += 1
+                if df.iloc[i,4] > 16000 and df.iloc[i,4] <= 50000 : p2 += 1
+                if df.iloc[i,4] > 8000 and df.iloc[i,4] <= 16000 : p3 += 1
+                if df.iloc[i,4] > 4000 and df.iloc[i,4] <= 8000 : p4 += 1
+                if df.iloc[i,4] > 2000 and df.iloc[i,4] <= 4000 : p5 += 1
+                if df.iloc[i,4]  <= 2000 : p6 += 1
+            smpl = len(df['No.'])
+            tmp.append([p1,p2,p3,p4,p5,p6,smpl])
+            PDCP900 = tmp[0]
+            sh_smpl.cells(33,5).value = PDCP900[0]
+            sh_smpl.cells(34,5).value = PDCP900[1]
+            sh_smpl.cells(35,5).value = PDCP900[2]
+            sh_smpl.cells(36,5).value = PDCP900[3]
+            sh_smpl.cells(37,5).value = PDCP900[4]
+            sh_smpl.cells(38,5).value = PDCP900[5]
+            print(nama[0]+nama[1],PDCP900)
+        if nama[1] == 'L2100':
+            global PDCP2100
+            df = pd.read_csv(path)
+            for i in range (0, len(df['No.'])):
+                if df.iloc[i,4] > 50000 and df.iloc[i,4] <= 200000 : p1 += 1
+                if df.iloc[i,4] > 16000 and df.iloc[i,4] <= 50000 : p2 += 1
+                if df.iloc[i,4] > 8000 and df.iloc[i,4] <= 16000 : p3 += 1
+                if df.iloc[i,4] > 4000 and df.iloc[i,4] <= 8000 : p4 += 1
+                if df.iloc[i,4] > 2000 and df.iloc[i,4] <= 4000 : p5 += 1
+                if df.iloc[i,4]  <= 2000 : p6 += 1
+            smpl = len(df['No.'])
+            tmp.append([p1,p2,p3,p4,p5,p6,smpl])
+            PDCP2100 = tmp[0]
+            sh_smpl.cells(33,8).value = PDCP2100[0]
+            sh_smpl.cells(34,8).value = PDCP2100[1]
+            sh_smpl.cells(35,8).value = PDCP2100[2]
+            sh_smpl.cells(36,8).value = PDCP2100[3]
+            sh_smpl.cells(37,8).value = PDCP2100[4]
+            sh_smpl.cells(38,8).value = PDCP2100[5]
+            print(nama[0]+nama[1],PDCP2100)
+        if nama[1] == 'L2300':
+            global PDCP2300
+            df = pd.read_csv(path)
+            for i in range (0, len(df['No.'])):
+                if df.iloc[i,4] > 50000 and df.iloc[i,4] <= 200000 : p1 += 1
+                if df.iloc[i,4] > 16000 and df.iloc[i,4] <= 50000 : p2 += 1
+                if df.iloc[i,4] > 8000 and df.iloc[i,4] <= 16000 : p3 += 1
+                if df.iloc[i,4] > 4000 and df.iloc[i,4] <= 8000 : p4 += 1
+                if df.iloc[i,4] > 2000 and df.iloc[i,4] <= 4000 : p5 += 1
+                if df.iloc[i,4]  <= 2000 : p6 += 1
+            smpl = len(df['No.'])
+            tmp.append([p1,p2,p3,p4,p5,p6,smpl])
+            PDCP2300 = tmp[0]
+            sh_smpl.cells(33,11).value = PDCP2300[0]
+            sh_smpl.cells(34,11).value = PDCP2300[1]
+            sh_smpl.cells(35,11).value = PDCP2300[2]
+            sh_smpl.cells(36,11).value = PDCP2300[3]
+            sh_smpl.cells(37,11).value = PDCP2300[4]
+            sh_smpl.cells(38,11).value = PDCP2300[5]
+            print(nama[0]+nama[1],PDCP2300)
+
+for name in os.listdir(dirpath):
+    path = os.path.join(dirpath, name)
+    if path.endswith('.csv') and os.path.isfile(path):
+        nama = [a.split('.')[0] for a in name.split()]
+        cek()
+
