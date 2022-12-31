@@ -1,0 +1,97 @@
+import pandas as pd
+import win32com.client
+import os
+
+dirpath = r"E:\IOH EJ\Jember-3\MC-JEMBER-3 ( 29-DEC-2022)\MR post"
+namafile = "Pre_Post MR Calculation.xlsx"
+
+Excel = win32com.client.Dispatch("Excel.Application")
+wb1 = Excel.Workbooks.Open(r"E:\Template\Pre Post MR Calculation.xlsx")
+sh_rsrp =wb1.Worksheets("RSRP_CQI_Thp")
+def rsrp ():
+    global RSRP
+    global mulai,baris,colom,tmp
+    df = pd.read_csv(path)
+    RSRP = []
+    ex = vg = g = f = b = 0 
+    for i in range(0, len(df.iloc[: , 2])):
+        if df.iloc[i , 2] >= -85.00: ex += 1
+        if df.iloc[i , 2] < -85.00 and df.iloc[i , 2] >= -95.00: vg += 1
+        if df.iloc[i , 2] < -95.00 and df.iloc[i , 2] >= -105.00: g += 1
+        if df.iloc[i , 2] < -105.00 and df.iloc[i , 2] >= -115.00: f += 1
+        if df.iloc[i , 2] < -115.00 and df.iloc[i , 2] >= -140.00: b += 1
+    smpl = df.iloc[: , 2].count()
+    RSRP.append([ex , vg , g , f , b, smpl])
+    print(name, RSRP)
+    if nama[1] == 'ALL':
+        mulai,baris,colom = 2,7,4
+        tmp = RSRP
+        tulis()
+    if nama[1] == 'L1800':
+        mulai,baris,colom = 2,7,15
+        tmp = RSRP
+        tulis()
+    if nama[1] == 'L2100':
+        mulai,baris,colom = 11,16,15
+        tmp = RSRP
+        tulis()
+    if nama[1] == 'L900':
+        mulai,baris,colom = 19,24,15
+        tmp = RSRP
+        tulis()
+
+def cqi ():
+    df = pd.read_csv(path)
+    CQI = []
+    ex = vg = g = f = b = 0 
+    for i in range(0, len(df.iloc[: , 2])):
+        if df.iloc[i , 2] > 10 and df.iloc[i , 2] <= 15: ex += 1
+        if df.iloc[i , 2] > 9 and df.iloc[i , 2] <= 10: vg += 1
+        if df.iloc[i , 2] > 8 and df.iloc[i , 2] <= 9: g += 1
+        if df.iloc[i , 2] > 7 and df.iloc[i , 2] <= 8: f += 1
+        if df.iloc[i , 2] > 0 and df.iloc[i , 2] <= 7: b += 1
+    smpl = df.iloc[: , 2].count()
+    CQI.append([ex , vg , g , f , b, smpl])
+    print(name, CQI)
+    num = 0 
+    for i in range(17, 22):
+        sh_rsrp.cells(i,4).value = CQI[0][num]
+        num += 1
+
+def tulis ():
+    num = 0 
+    for i in range(mulai, baris):
+        sh_rsrp.cells(i,colom).value = tmp[0][num]
+        num += 1
+
+def thp ():
+    df = pd.read_csv(path)
+    THP = []
+    ex = f = b = 0 
+    for i in range(0, len(df.iloc[: , 1])):
+        if df.iloc[i , 5] == '' : pass        
+        if float(df.iloc[i , 5]) > 3000 : ex += 1
+        if float(df.iloc[i , 5]) > 1400 and float(df.iloc[i , 5]) <= 3000: f += 1
+        if float(df.iloc[i , 5]) > 0 and float(df.iloc[i , 5]) <= 1400: b += 1
+    smpl = df.iloc[: , 5].count()
+    THP.append([ex , f , b, smpl])
+    print(name, THP)
+    num = 0 
+    for i in range(11, 14):
+        sh_rsrp.cells(i,4).value = THP[0][num]
+        num += 1
+
+for name in os.listdir(dirpath):
+    path = os.path.join(dirpath, name)    
+    if path.endswith('.csv') and os.path.isfile(path):
+        nama = name.split()
+        if nama[0] == 'RSRP' : 
+            if nama[1] == 'ALL': rsrp()
+            if nama[1] == 'L1800': rsrp()
+            if nama[1] == 'L900' : rsrp()
+            if nama[1] == 'L2100' : rsrp()
+        if nama[0] == 'CQI' : cqi()
+        if nama[0] == 'THP' : thp()
+
+wb1.SaveAs(Filename=f'{dirpath}/{namafile}')
+wb1.Close()
