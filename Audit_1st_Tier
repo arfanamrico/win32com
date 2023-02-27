@@ -1,0 +1,171 @@
+import win32com.client    
+import pandas as pd
+import os
+
+pic_path = r"E:\RO TSEL JABO Project\Logfiles\February 2023\CBN106"
+Excel = win32com.client.Dispatch("Excel.Application")
+wb = Excel.Workbooks.Open(r"E:\Template\RO_AUDIT_1stTier.xlsx")
+
+def baca ():
+    global df
+    df = pd.read_excel(path)
+for name in os.listdir(pic_path):
+    path = os.path.join(pic_path, name)    
+    if path.endswith('.xlsx') and os.path.isfile(path):
+        baca()
+
+#penamaan sheet
+sh_1stTier =wb.Worksheets("1stTier")
+
+#nama-nama foto
+panoramic = ["0.jpg","30.jpg","60.jpg","90.jpg","120.jpg","150.jpg","180.jpg","210.jpg","240.jpg","270.jpg","300.jpg","330.jpg"]
+sec1 = ["azz_1.jpg","mt_1.jpg","label_1.jpg","rru_1.jpg","electrical_1.jpg"]
+sec2 = ["azz_2.jpg","mt_2.jpg","label_2.jpg","rru_2.jpg","electrical_2.jpg"]
+sec3 = ["azz_3.jpg","mt_3.jpg","label_3.jpg","rru_3.jpg","electrical_3.jpg"]
+auditdata = ["compas.jpg","antennaheight.jpg","tower.jpg","sitename.jpg"]
+
+#memasukkan gambar pada sheet 1stTier
+try:    sh_1stTier.cells(5,6).value = df.loc[0,'NE']
+except: pass
+for i in auditdata:
+    try:
+        #compas, antennaheight, tower photo, sitename
+        if i in os.listdir(f'{pic_path}/site_audit/site') and i == auditdata[0]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/site/{auditdata[0]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,2).Left, Top=sh_1stTier.Cells(10,1).Top, Width=190.08, Height=164.88)
+        if i in os.listdir(f'{pic_path}/site_audit/site') and i == auditdata[1]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/site/{auditdata[1]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,9).Left, Top=sh_1stTier.Cells(10,1).Top, Width=190.08, Height=164.88)
+        if i in os.listdir(f'{pic_path}/site_audit/site') and i == auditdata[2]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/site/{auditdata[2]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,16).Left, Top=sh_1stTier.Cells(10,1).Top, Width=190.08, Height=164.88)
+    except:
+        pass
+#memasukkan gambar Panoramic
+for i in panoramic:
+    try:
+        #panoramic 0, 30, 60, 90
+        if i in os.listdir(f'{pic_path}/site_audit/panoramik') and i == panoramic[0]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/panoramik/{panoramic[0]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,1).Left, Top=sh_1stTier.Cells(25,1).Top, Width=231.84, Height=159.84)
+        if i in os.listdir(f'{pic_path}/site_audit/panoramik') and i == panoramic[1]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/panoramik/{panoramic[1]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,6).Left, Top=sh_1stTier.Cells(25,1).Top, Width=231.84, Height=159.84)
+        if i in os.listdir(f'{pic_path}/site_audit/panoramik') and i == panoramic[2]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/panoramik/{panoramic[2]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,11).Left, Top=sh_1stTier.Cells(25,1).Top, Width=231.84, Height=159.84)
+        if i in os.listdir(f'{pic_path}/site_audit/panoramik') and i == panoramic[3]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/panoramik/{panoramic[3]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,16).Left, Top=sh_1stTier.Cells(25,1).Top, Width=231.84, Height=159.84)
+        #panoramic 120, 150, 180, 210
+        if i in os.listdir(f'{pic_path}/site_audit/panoramik') and i == panoramic[4]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/panoramik/{panoramic[4]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,1).Left, Top=sh_1stTier.Cells(37,1).Top, Width=231.84, Height=159.84)
+        if i in os.listdir(f'{pic_path}/site_audit/panoramik') and i == panoramic[5]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/panoramik/{panoramic[5]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,6).Left, Top=sh_1stTier.Cells(37,1).Top, Width=231.84, Height=159.84)
+        if i in os.listdir(f'{pic_path}/site_audit/panoramik') and i == panoramic[6]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/panoramik/{panoramic[6]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,11).Left, Top=sh_1stTier.Cells(37,1).Top, Width=231.84, Height=159.84)
+        if i in os.listdir(f'{pic_path}/site_audit/panoramik') and i == panoramic[7]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/panoramik/{panoramic[7]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,16).Left, Top=sh_1stTier.Cells(37,1).Top, Width=231.84, Height=159.84)
+        #panoramic 240, 270, 300, 330
+        if i in os.listdir(f'{pic_path}/site_audit/panoramik') and i == panoramic[8]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/panoramik/{panoramic[8]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,1).Left, Top=sh_1stTier.Cells(49,1).Top, Width=231.84, Height=159.84)
+        if i in os.listdir(f'{pic_path}/site_audit/panoramik') and i == panoramic[9]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/panoramik/{panoramic[9]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,6).Left, Top=sh_1stTier.Cells(49,1).Top, Width=231.84, Height=159.84)
+        if i in os.listdir(f'{pic_path}/site_audit/panoramik') and i == panoramic[10]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/panoramik/{panoramic[10]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,11).Left, Top=sh_1stTier.Cells(49,1).Top, Width=231.84, Height=159.84)
+        if i in os.listdir(f'{pic_path}/site_audit/panoramik') and i == panoramic[11]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/panoramik/{panoramic[11]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,16).Left, Top=sh_1stTier.Cells(49,1).Top, Width=231.84, Height=159.84)
+    except:
+        pass
+#megisi data sheet Panoramicpole
+try:    sh_1stTier.cells(68,1).value = df.loc[0,'Cell Name']
+except: pass
+try:    sh_1stTier.cells(69,1).value = df.loc[1,'Cell Name']
+except: pass
+try:    sh_1stTier.cells(70,1).value = df.loc[2,'Cell Name']
+except: pass
+try:    sh_1stTier.cells(68,5).value = df.loc[0,'Antenna Type']
+except: pass
+try:    sh_1stTier.cells(69,5).value = df.loc[1,'Antenna Type']
+except: pass
+try:    sh_1stTier.cells(70,5).value = df.loc[2,'Antenna Type']
+except: pass
+try:    sh_1stTier.cells(68,7).value = df.loc[0,'No']
+except: pass
+try:    sh_1stTier.cells(69,7).value = df.loc[1,'No']
+except: pass
+try:    sh_1stTier.cells(70,7).value = df.loc[2,'No']
+except: pass
+try:    sh_1stTier.cells(68,8).value = df.loc[0,'Antenna Height']
+except: pass
+try:    sh_1stTier.cells(69,8).value = df.loc[1,'Antenna Height']
+except: pass
+try:    sh_1stTier.cells(70,8).value = df.loc[2,'Antenna Height']
+except: pass
+try:    sh_1stTier.cells(68,9).value = df.loc[0,'Azimuth pre']
+except: pass
+try:    sh_1stTier.cells(69,9).value = df.loc[1,'Azimuth pre']
+except: pass
+try:    sh_1stTier.cells(70,9).value = df.loc[2,'Azimuth pre']
+except: pass
+try:    sh_1stTier.cells(68,10).value = df.loc[0,'M-DownTilt pre']
+except: pass
+try:    sh_1stTier.cells(69,10).value = df.loc[1,'M-DownTilt pre']
+except: pass
+try:    sh_1stTier.cells(70,10).value = df.loc[2,'M-DownTilt pre']
+except: pass
+try:    sh_1stTier.cells(68,15).value = df.loc[0,'Azimuth post']
+except: pass
+try:    sh_1stTier.cells(69,15).value = df.loc[1,'Azimuth post']
+except: pass
+try:    sh_1stTier.cells(70,15).value = df.loc[2,'Azimuth post']
+except: pass
+try:    sh_1stTier.cells(68,16).value = df.loc[0,'M-DownTilt post']
+except: pass
+try:    sh_1stTier.cells(69,16).value = df.loc[1,'M-DownTilt post']
+except: pass
+try:    sh_1stTier.cells(70,16).value = df.loc[2,'M-DownTilt post']
+except: pass
+for i in sec1:
+    try:
+        #azimut , mt, label, RRU
+        if i in os.listdir(f'{pic_path}/site_audit/sector1') and i == sec1[0]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector1/{sec1[0]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,2).Left, Top=sh_1stTier.Cells(74,1).Top, Width=283.68, Height=131.04)
+        if i in os.listdir(f'{pic_path}/site_audit/sector1') and i == sec1[1]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector1/{sec1[1]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,2).Left, Top=sh_1stTier.Cells(84,1).Top, Width=283.68, Height=131.04)
+        if i in os.listdir(f'{pic_path}/site_audit/sector1') and i == sec1[2]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector1/{sec1[2]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,2).Left, Top=sh_1stTier.Cells(94,1).Top, Width=283.68, Height=131.04)
+        if i in os.listdir(f'{pic_path}/site_audit/sector1') and i == sec1[3]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector1/{sec1[3]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,2).Left, Top=sh_1stTier.Cells(104,1).Top, Width=283.68, Height=131.04)
+        if i in os.listdir(f'{pic_path}/site_audit/sector1') and i == sec1[4]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector1/{sec1[4]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,2).Left, Top=sh_1stTier.Cells(114,1).Top, Width=283.68, Height=131.04)
+    except:
+        pass
+for i in sec2:
+    try:
+        #azimut , mt, label, RRU
+        if i in os.listdir(f'{pic_path}/site_audit/sector2') and i == sec2[0]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector2/{sec2[0]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,8).Left, Top=sh_1stTier.Cells(74,1).Top, Width=283.68, Height=131.04)
+        if i in os.listdir(f'{pic_path}/site_audit/sector2') and i == sec2[1]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector2/{sec2[1]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,8).Left, Top=sh_1stTier.Cells(84,1).Top, Width=283.68, Height=131.04)
+        if i in os.listdir(f'{pic_path}/site_audit/sector2') and i == sec2[2]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector2/{sec2[2]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,8).Left, Top=sh_1stTier.Cells(94,1).Top, Width=283.68, Height=131.04)
+        if i in os.listdir(f'{pic_path}/site_audit/sector2') and i == sec2[3]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector2/{sec2[3]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,8).Left, Top=sh_1stTier.Cells(104,1).Top, Width=283.68, Height=131.04)
+        if i in os.listdir(f'{pic_path}/site_audit/sector2') and i == sec2[4]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector2/{sec2[4]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,8).Left, Top=sh_1stTier.Cells(114,1).Top, Width=283.68, Height=131.04)
+    except:
+        pass
+for i in sec3:
+    try:
+        #azimut , mt, label, RRU
+        if i in os.listdir(f'{pic_path}/site_audit/sector3') and i == sec3[0]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector3/{sec3[0]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,14).Left, Top=sh_1stTier.Cells(74,1).Top, Width=283.68, Height=131.04)
+        if i in os.listdir(f'{pic_path}/site_audit/sector3') and i == sec3[1]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector3/{sec3[1]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,14).Left, Top=sh_1stTier.Cells(84,1).Top, Width=283.68, Height=131.04)
+        if i in os.listdir(f'{pic_path}/site_audit/sector3') and i == sec3[2]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector3/{sec3[2]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,14).Left, Top=sh_1stTier.Cells(94,1).Top, Width=283.68, Height=131.04)
+        if i in os.listdir(f'{pic_path}/site_audit/sector3') and i == sec3[3]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector3/{sec3[3]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,14).Left, Top=sh_1stTier.Cells(104,1).Top, Width=283.68, Height=131.04)
+        if i in os.listdir(f'{pic_path}/site_audit/sector3') and i == sec3[4]:
+            sh_1stTier.Shapes.AddPicture(f'{pic_path}/site_audit/sector3/{sec3[4]}',LinkToFile=False, SaveWithDocument=True, Left=sh_1stTier.Cells(1,14).Left, Top=sh_1stTier.Cells(114,1).Top, Width=283.68, Height=131.04)
+    except:
+        pass
+print('sheet 1stTier done')
+
+namafile = f"1stTier_{df.loc[0,'Site ID']}_Audit.xlsx"
+wb.SaveAs(Filename=f'{pic_path}/{namafile}')
+wb.Close()
